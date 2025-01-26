@@ -47,3 +47,7 @@ uvicorn main:app --reload
 ```
 
 Visit http://localhost:8000/dashboard
+
+## Output:
+![architecture](./images/output1.png)
+![architecture](./images/output2.png)
