@@ -1,0 +1,34 @@
+# Development environment
+.env
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Keys and Certificates
+*.pem
+*.key
+
+# Local data and logs
+*.db
+*.log
+redis-data/
+kafka-logs/
+zookeeper-data/
+ollama-models/
+
+# Kafka
+kafka-streams-app-*
+
+# Redis
+dump.rdb
+*.rdb
+
+# Zookeeper
+zookeeper.out
+zoo.cfg
+
+# IDE specific
+.idea/
+.vscode/
+*.swp

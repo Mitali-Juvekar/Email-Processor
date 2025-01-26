@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Processing Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <h1 class="text-2xl mb-4">Email Processing Dashboard</h1>
+        <input type="text" id="search" placeholder="Search emails..." class="w-full p-2 mb-4 border rounded">
+        <div class="bg-white p-4 rounded shadow">
+                <h2>Recent Emails</h2>
+                <div id="emailList" class="overflow-x-auto">
+                    <table class="min-w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-200">
+                                <th class="px-4 py-2">Account</th> 
+                                <th class="px-4 py-2">Name</th>
+                                <th class="px-4 py-2">Age</th>
+                                <th class="px-4 py-2">Source</th>
+                                <th class="px-4 py-2">Destination</th>
+                                <th class="px-4 py-2">Package Ready Date</th>
+                                <th class="px-4 py-2">Required by Date</th>
+                                <th class="px-4 py-2">Price Range</th>
+                                <th class="px-4 py-2">Negotiable</th>
+                            </tr>
+                        </thead>
+                        <tbody id="emailTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        async function loadEmails() {
+            try{
+                const response = await fetch('/process-emails');
+                const data = await response.json();
+                console.log("API response:", data);  // Debug
+                if (data.results && data.results.results) {
+                    displayEmails(data.results.results);
+                }
+            } catch (error) {
+                console.error("Error loading emails:", error);
+            }
+        }
+
+        async function searchEmails() {
+            const query = document.getElementById('search').value;
+            const response = await fetch(`/search?query=${query}`);
+            const data = await response.json();
+            displayEmails(data.results);
+        }
+
+        document.getElementById('search').addEventListener('input', searchEmails);
+
+        function displayEmails(emails) {
+            if (!emails || !emails.length) {
+                console.log("No emails to display");
+                return;
+            }
+            console.log("Displaying emails:", emails);  // Debug
+            const tbody = document.getElementById('emailTableBody');
+            console.log("Received emails:", emails); // Debug log
+            tbody.innerHTML = emails.map(email => `
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-4 py-2">${email.source_account || 'N/A'}</td>
+                    <td class="px-4 py-2">${email.processed_data.extracted_info.Name || 'N/A'}</td>
+                    <td class="px-4 py-2">${email.processed_data.extracted_info.Age || 'N/A'}</td>
+                    <td class="px-4 py-2">${email.processed_data.extracted_info['Source Address'] || 'N/A'}</td>
+                    <td class="px-4 py-2">${email.processed_data.extracted_info['Destination Address'] || 'N/A'}</td>
+                    <td class="px-4 py-2">${email.processed_data.extracted_info['Package Ready Date'] || 'N/A'}</td>
+                    <td class="px-4 py-2">${email.processed_data.extracted_info['Required by Date'] || 'N/A'}</td>
+                    <td class="px-4 py-2">${email.processed_data.extracted_info['Price Range'] || 'N/A'}</td>
+                    <td class="px-4 py-2">${email.processed_data.extracted_info['Is Price Negotiable'] || 'N/A'}</td>
+                </tr>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadEmails();
+            const searchInput = document.getElementById('search');
+            if (searchInput) {
+                searchInput.addEventListener('input', searchEmails);
+            }
+        });
+    </script>
+</body>
+</html>
