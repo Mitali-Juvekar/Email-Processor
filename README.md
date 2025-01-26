@@ -51,3 +51,9 @@ Visit http://localhost:8000/dashboard
 ## Output:
 ![architecture](./images/output2.png)
 ![architecture](./images/output1.png)
+
+
+## Emails looks like:
+![architecture](./images/example_mail1.png)
+![architecture](./images/example_mail2.png)
+![architecture](./images/example_mail3.png)
