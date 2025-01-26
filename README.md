@@ -1,6 +1,6 @@
 # Email Processing Dashboard
 
-Automated email processor that extracts shipping information using LLMs and displays in a dashboard.
+Automated email processor that extracts shipping information using LLMs and displays it in a dashboard.
 
 ## Features
 - Email processing with Mistral LLM
@@ -49,5 +49,5 @@ uvicorn main:app --reload
 Visit http://localhost:8000/dashboard
 
 ## Output:
-![architecture](./images/output1.png)
 ![architecture](./images/output2.png)
+![architecture](./images/output1.png)
